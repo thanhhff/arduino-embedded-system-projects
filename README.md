@@ -1,6 +1,7 @@
 # Project - Quản trị dự án hệ nhúng theo chuẩn kỹ năng ITSS
 
 ## Phần 1: Xây dựng xe dò Line 
+Chú ý: khi Code sẽ đặt tên các chân là #DEFINE xxx 
 
 Sơ đồ đấu mắc chân: 
 
