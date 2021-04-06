@@ -9,11 +9,11 @@ const int RIGHT_MOTOR_PIN2 = 3;
 const int LEFT_MOTOR_PIN1 = 4;
 const int LEFT_MOTOR_PIN2 = 5;
 
-const int PWD_MOTOR_PIN1 = 9;
-const int PWD_MOTOR_PIN2 = 10;
+const int PWD_MOTOR_PIN1 = 6;
+const int PWD_MOTOR_PIN2 = 7;
 
 // PIN của IR Sensor
-const int IR_SENSOR_PINS = {A0, A1, A2, A3, A4};
+const int IR_SENSOR_PINS = {8, 9, 10, 11, 12};
 
 // Hằng số Kp, Ki, Kd dùng trong điều khiển theo thuật toán PID
 // Sẽ điều chỉnh trong quá trình thực hành 
@@ -69,7 +69,7 @@ void getIRSensorData() {
   
   if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==0)&&(sensorValues[4]==1))
   error=4;
-  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==1)&&(sensensorValuessor[4]==1))
+  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==1)&&(sensorValues[4]==1))
   error=3;
   else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==1)&&(sensorValues[4]==0))
   error=2;
