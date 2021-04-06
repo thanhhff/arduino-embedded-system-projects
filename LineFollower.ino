@@ -1,5 +1,5 @@
 //int NUM_SENSORS = 5;
-int MAX_MOTOR_SPEED = 250;
+int MAX_MOTOR_SPEED = 240;
 
 // PIN của motor 
 const int RIGHT_MOTOR_PIN1 = 2;
@@ -12,7 +12,7 @@ const int PWD_MOTOR_PIN1 = 6;
 const int PWD_MOTOR_PIN2 = 7;
 
 // PIN của IR Sensor
-int IR_SENSOR_PINS[5] = {A0, A1, A2, A3, A4};
+int IR_SENSOR_PINS[5] = {A4, A3, A2, A1, A0};
 
 // Hằng số Kp, Ki, Kd dùng trong điều khiển theo thuật toán PID
 // Sẽ điều chỉnh trong quá trình thực hành 
@@ -55,8 +55,9 @@ void loop() {
     getIRSensorData();
     calculatePID();
 
-    int leftSpeed = constrain(initSpeed - PIDValue, -MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
-    int rightSpeed = constrain(initSpeed + PIDValue, -MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
+    int leftSpeed = constrain(initSpeed - PIDValue, 0, MAX_MOTOR_SPEED);
+    int rightSpeed = constrain(initSpeed + PIDValue, 0, MAX_MOTOR_SPEED);
+//    Serial.print("Left speed" + leftSpeed);
     
     controlMotor(leftSpeed, rightSpeed);
 }
@@ -64,6 +65,7 @@ void loop() {
 void getIRSensorData() {
   for(int i = 0; i < 5; i++) {
     sensorValues[i] = digitalRead(IR_SENSOR_PINS[i]);
+//    Serial.print(sensorValues[i]);
   }
   
   if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==0)&&(sensorValues[4]==1))
