@@ -1,6 +1,5 @@
-
-#define NUM_SENSORS 5
-#define MAX_MOTOR_SPEED = 250;
+//int NUM_SENSORS = 5;
+int MAX_MOTOR_SPEED = 250;
 
 // PIN của motor 
 const int RIGHT_MOTOR_PIN1 = 2;
@@ -13,18 +12,18 @@ const int PWD_MOTOR_PIN1 = 6;
 const int PWD_MOTOR_PIN2 = 7;
 
 // PIN của IR Sensor
-const int IR_SENSOR_PINS = {8, 9, 10, 11, 12};
+int IR_SENSOR_PINS[5] = {A0, A1, A2, A3, A4};
 
 // Hằng số Kp, Ki, Kd dùng trong điều khiển theo thuật toán PID
 // Sẽ điều chỉnh trong quá trình thực hành 
 float Kp = 0.07, Ki = 0, Kd = 0.8; 
 // Các giá trị liên quan đến tính toán theo thuật toán PID
 float integral = 0;
-float error = 0, preError=0;
+float error = 0, preError = 0;
 float PIDValue = 0;
 
 // Mảng lưu giá trị đọc được từ cảm biến 
-unsigned int sensorValues[NUM_SENSORS]= { 0, 0, 0, 0, 0 };
+unsigned int sensorValues[5];
 
 // Tốc độ ban đầu của motor
 int initSpeed = 100;
@@ -45,7 +44,7 @@ void setup() {
  pinMode(RIGHT_MOTOR_PIN1, OUTPUT); 
  
  // Set pin cho IR sensor
- for(int i = 0; i < NUM_SENSORS; i++) {
+ for(int i = 0; i < 5; i++) {
     pinMode(IR_SENSOR_PINS[i], INPUT);
  }
 
@@ -63,7 +62,7 @@ void loop() {
 }
 
 void getIRSensorData() {
-  for(int i = 0; i < NUM_SENSORS; i++) {
+  for(int i = 0; i < 5; i++) {
     sensorValues[i] = digitalRead(IR_SENSOR_PINS[i]);
   }
   
