@@ -1,12 +1,12 @@
 //int NUM_SENSORS = 5;
-int MAX_MOTOR_SPEED = 240;
+int MAX_MOTOR_SPEED = 20;
 
 // PIN của motor 
-const int RIGHT_MOTOR_PIN1 = 2;
-const int RIGHT_MOTOR_PIN2 = 3;
+const int RIGHT_MOTOR_PIN1 = 3;
+const int RIGHT_MOTOR_PIN2 = 2;
 
-const int LEFT_MOTOR_PIN1 = 4;
-const int LEFT_MOTOR_PIN2 = 5;
+const int LEFT_MOTOR_PIN1 = 5;
+const int LEFT_MOTOR_PIN2 = 4;
 
 const int PWD_MOTOR_PIN1 = 6;
 const int PWD_MOTOR_PIN2 = 7;
@@ -26,7 +26,7 @@ float PIDValue = 0;
 unsigned int sensorValues[5];
 
 // Tốc độ ban đầu của motor
-int initSpeed = 100;
+int initSpeed = 10;
 
 void getIRSensorData(void);
 void calculate_pid(void);
@@ -57,7 +57,7 @@ void loop() {
 
     int leftSpeed = constrain(initSpeed - PIDValue, 0, MAX_MOTOR_SPEED);
     int rightSpeed = constrain(initSpeed + PIDValue, 0, MAX_MOTOR_SPEED);
-//    Serial.print("Left speed" + leftSpeed);
+    Serial.println("Left speed" + leftSpeed);
     
     controlMotor(leftSpeed, rightSpeed);
 }
@@ -65,28 +65,28 @@ void loop() {
 void getIRSensorData() {
   for(int i = 0; i < 5; i++) {
     sensorValues[i] = digitalRead(IR_SENSOR_PINS[i]);
-//    Serial.print(sensorValues[i]);
+    Serial.println(sensorValues[i]);
   }
   
-  if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==0)&&(sensorValues[4]==1))
+  if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[3]==0)&&(sensorValues[4]==1))
   error=4;
-  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==1)&&(sensorValues[4]==1))
+  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[3]==1)&&(sensorValues[4]==1))
   error=3;
-  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==1)&&(sensorValues[4]==0))
+  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[3]==1)&&(sensorValues[4]==0))
   error=2;
-  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==1)&&(sensorValues[4]==1)&&(sensorValues[4]==0))
+  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==1)&&(sensorValues[3]==1)&&(sensorValues[4]==0))
   error=1;
-  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==1)&&(sensorValues[4]==0)&&(sensorValues[4]==0))
+  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==1)&&(sensorValues[3]==0)&&(sensorValues[4]==0))
   error=0;
-  else if((sensorValues[0]==0)&&(sensorValues[1]==1)&&(sensorValues[2]==1)&&(sensorValues[4]==0)&&(sensorValues[4]==0))
+  else if((sensorValues[0]==0)&&(sensorValues[1]==1)&&(sensorValues[2]==1)&&(sensorValues[3]==0)&&(sensorValues[4]==0))
   error=-1;
-  else if((sensorValues[0]==0)&&(sensorValues[1]==1)&&(sensorValues[2]==0)&&(sensorValues[4]==0)&&(sensorValues[4]==0))
+  else if((sensorValues[0]==0)&&(sensorValues[1]==1)&&(sensorValues[2]==0)&&(sensorValues[3]==0)&&(sensorValues[4]==0))
   error=-2;
-  else if((sensorValues[0]==1)&&(sensorValues[1]==1)&&(sensorValues[2]==0)&&(sensorValues[4]==0)&&(sensorValues[4]==0))
+  else if((sensorValues[0]==1)&&(sensorValues[1]==1)&&(sensorValues[2]==0)&&(sensorValues[3]==0)&&(sensorValues[4]==0))
   error=-3;
-  else if((sensorValues[0]==1)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==0)&&(sensorValues[4]==0))
+  else if((sensorValues[0]==1)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[3]==0)&&(sensorValues[4]==0))
   error=-4;
-  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[4]==0)&&(sensorValues[4]==0))
+  else if((sensorValues[0]==0)&&(sensorValues[1]==0)&&(sensorValues[2]==0)&&(sensorValues[3]==0)&&(sensorValues[4]==0))
     if(error==-4) error=-5;
     else error=5;
 
