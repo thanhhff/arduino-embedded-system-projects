@@ -52,7 +52,7 @@ void setup() {
   digitalWrite(InC, LOW);
   digitalWrite(InD, HIGH);
   digitalWrite(13, LOW);
-  analogWrite(EnA,127);
+  analogWrite(EnA,255);
   analogWrite(EnB,255);
   pinMode(Pin_ss1, INPUT);//Set chân cảm biến 1 là input
   pinMode(Pin_ss2, INPUT);//Set chân cảm biến 2 là input
