@@ -59,19 +59,11 @@ void setup() {
   pinMode(Pin_ss3, INPUT);//Set chân cảm biến 3 là input
   pinMode(Pin_ss4, INPUT);//Set chân cảm biến 4 là input
   pinMode(Pin_ss5, INPUT);//Set chân cảm biến 4 là input
-  //Serial.begin(9600);
 }
 
 void loop() {
-  In_line_last = IN_line;
   IN_line = In_SenSor();
-  if(IN_line!=In_line_last)
-  {
-    if(In_line_last!=5)
-    {
-      robotMover(IN_line);
-    } 
-  }
+  robotMover(IN_line);
 }
 void robotMover (int line)
 {
@@ -105,7 +97,7 @@ void robotMover (int line)
       //delay(10);
       break;
     }
-    case 0:// quay phải
+    case 0:// go up 
     {
       analogWrite(EnA,150);//banh phai
       analogWrite(EnB,150);//banh trai
@@ -144,13 +136,13 @@ void robotMover (int line)
       Serial.print(mode);
       if(mode==0)
       {
-        analogWrite(EnA,80);//banh phai
+        analogWrite(EnA,255);//banh phai
         analogWrite(EnB,0);//banh tra
       }
       else
       {
         analogWrite(EnA,0);//banh phai
-        analogWrite(EnB,80);//banh tra
+        analogWrite(EnB,255);//banh tra
       }
       break;
     }
@@ -179,6 +171,10 @@ int In_SenSor()
   if((ss1==1)&&(ss2==1)&&(ss3==0)&&(ss4==1)&&(ss5==1))//giua line
   {
     return 0; 
+  }
+  else if ((ss1==1)&&(ss3==0)&&(ss5==1))
+  {
+    return 0;
   }
   else if((ss1==1)&&(ss2==1)&&(ss3==0)&&(ss4==0)&&(ss5==1))//lech trai cap 1
   {
