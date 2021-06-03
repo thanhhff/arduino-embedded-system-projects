@@ -34,6 +34,8 @@ void setup() {
     for(int i = 0; i < NUM_SENSORS; i++) {
         pinMode(sensor_pins[i], INPUT);
     }
+
+    Serial.begin(9600);
 }
 
 void loop() {
@@ -79,6 +81,8 @@ int getSensor() {
         case 0b00001: 
         case 0b00011: is_left_direction = 0; error = 6; break;
     }
+    //Serial.println(">>>>Error: " + String(error) );
+    //delay(2000);
     return error;
 }
 
@@ -102,9 +106,9 @@ void control_robot(int error) {
         case  7: control_motor(80, 10);   break;
         case  5:                                  
             if(is_left_direction == 0)
-                control_motor(0, 100); 
+                control_motor(10, 100); 
             else
-                control_motor(100, 0);    
+                control_motor(100, 10);    
             break;   
         default: break;
     }
