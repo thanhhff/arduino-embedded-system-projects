@@ -2,7 +2,7 @@ const int EnA = 11; // right
 const int EnB = 10; // left
 const int InA = 13;
 const int InB = 12;
-const int InCright = 9;
+const int InC = 9;
 const int InD = 8;
 
 int error, is_left_direction;
@@ -52,11 +52,11 @@ int getSensor() {
         case 0b11011: error = 0; break;                             
         // Lệch hoàn toàn 
         case 0b11111: error = 5; break;
-        
-        case 0b10000: break;
-        
-        // Gõ vuông sang phải                         
+
+        // Gõ vuông sang phải    
+        case 0b10000: break;         
         case 0b11000: is_left_direction = 1; error = 7; break;  
+        
         // Lệch trái cấp 1
         case 0b11001: is_left_direction = 1; error = 1; break;
         // Lệch trái cấp 2
@@ -65,8 +65,8 @@ int getSensor() {
         case 0b11100: is_left_direction = 1; error = 3; break;
         // Lệch trái cấp 4
         case 0b11110: is_left_direction = 1; error = 4; break;
-        // Lệch phải cấp 1
         
+        // Lệch phải cấp 1
         case 0b10011: is_left_direction = 0; error = -1; break;
         // Lệch phải cấp 2
         case 0b10111: is_left_direction = 0; error = -2; break;
@@ -75,10 +75,8 @@ int getSensor() {
         // Lệch phải cấp 4
         case 0b01111: is_left_direction = 0; error = -4; break;
         
-        //
-        case 0b00001: break;
-        
         //Gõ vuông sang trái 
+        case 0b00001: 
         case 0b00011: is_left_direction = 0; error = 6; break;
     }
     return error;
@@ -100,13 +98,13 @@ void control_robot(int error) {
         case  2: control_motor(100, 50);  break;
         case  3: control_motor(100, 25);  break;
         case  4: control_motor(150, 25);  break;
-        case  6: control_motor(0, 80);    break;
-        case  7: control_motor(80, 0);    break;
+        case  6: control_motor(10, 80);   break;
+        case  7: control_motor(80, 10);   break;
         case  5:                                  
             if(is_left_direction == 0)
-                control_motor(0, 80); 
+                control_motor(0, 100); 
             else
-                control_motor(80, 0);    
+                control_motor(100, 0);    
             break;   
         default: break;
     }
