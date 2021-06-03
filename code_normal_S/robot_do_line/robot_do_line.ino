@@ -46,32 +46,22 @@ void setup() {
   pinMode(InB, OUTPUT);
   pinMode(InC, OUTPUT);
   pinMode(InD, OUTPUT);
-  pinMode(13, OUTPUT);
   digitalWrite(InA, LOW);
   digitalWrite(InB, HIGH);
   digitalWrite(InC, LOW);
   digitalWrite(InD, HIGH);
-  digitalWrite(13, LOW);
-  analogWrite(EnA,255);
-  analogWrite(EnB,255);
+  analogWrite(EnA,150);
+  analogWrite(EnB,150);
   pinMode(Pin_ss1, INPUT);//Set chân cảm biến 1 là input
   pinMode(Pin_ss2, INPUT);//Set chân cảm biến 2 là input
   pinMode(Pin_ss3, INPUT);//Set chân cảm biến 3 là input
   pinMode(Pin_ss4, INPUT);//Set chân cảm biến 4 là input
   pinMode(Pin_ss5, INPUT);//Set chân cảm biến 4 là input
-  //Serial.begin(9600);
 }
 
 void loop() {
-  In_line_last = IN_line;
   IN_line = In_SenSor();
-  if(IN_line!=In_line_last)
-  {
-    if(In_line_last!=5)
-    {
-      robotMover(IN_line);
-    } 
-  }
+  robotMover(IN_line);
 }
 void robotMover (int line)
 {
@@ -81,62 +71,54 @@ void robotMover (int line)
     {
       analogWrite(EnA,150);//banh phai
       analogWrite(EnB,25);//banh trai
-      //delay(200);
       break;
     }
     case -3://sang trai
     {
       analogWrite(EnA,100);//banh phai
       analogWrite(EnB,25);//banh trai
-      //delay(50);
       break;
     }
     case -2:// sang trai
     {
       analogWrite(EnA,100);//banh phai
       analogWrite(EnB,50);//banh trai
-      //delay(30);
       break;
     };
     case -1:// sang trai
     {
       analogWrite(EnA,150);//banh phai
       analogWrite(EnB,100);//banh trai
-      //delay(10);
       break;
     }
-    case 0:// quay phải
+    case 0:// go up 
     {
-      analogWrite(EnA,150);//banh phai
-      analogWrite(EnB,150);//banh trai
+      analogWrite(EnA,170);//banh phai
+      analogWrite(EnB,170);//banh trai
       break;
     }
     case 1:// rẽ phai
     {
       analogWrite(EnA,100);//banh phai
       analogWrite(EnB,150);//banh trai
-      //delay(10);
       break;
     };
     case 2:// rẽ phai
     {
       analogWrite(EnA,50);//banh phai
       analogWrite(EnB,100);//banh trai
-     // delay(30);
       break;
     }
     case 3:// rẽ phai
     {
       analogWrite(EnA,25);//banh phai
       analogWrite(EnB,100);//banh trai
-      //delay(50);
       break;
     }
     case 4:// rẽ phai
     {
       analogWrite(EnA,25);//banh phai
       analogWrite(EnB,150);//banh tra
-     // delay(200);
       break;
     }
     case 5:// rẽ phải
@@ -144,26 +126,24 @@ void robotMover (int line)
       Serial.print(mode);
       if(mode==0)
       {
-        analogWrite(EnA,80);//banh phai
-        analogWrite(EnB,0);//banh tra
+        analogWrite(EnA,150);//banh phai
+        analogWrite(EnB,10);//banh tra
       }
       else
       {
-        analogWrite(EnA,0);//banh phai
-        analogWrite(EnB,80);//banh tra
+        analogWrite(EnA,10);//banh phai
+        analogWrite(EnB,150);//banh tra
       }
       break;
     }
     case 6:{
       analogWrite(EnA,80);//banh phai
       analogWrite(EnB,0);//banh tra
-      //delay(1000);
       break;
     }
     case 7:{
       analogWrite(EnA,0);//banh phai
       analogWrite(EnB,80);//banh tra
-      //delay(1000);
       break;
     }
   }
