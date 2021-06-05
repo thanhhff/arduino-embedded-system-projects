@@ -12,7 +12,7 @@ const int START_SPEED = 75;
 
 int mask;
 const int NUM_SENSORS = 5; 
-const int sensor_pins[NUM_SENSORS] = {A4, A3, A2, A1, A0};
+const int sensor_pins[NUM_SENSORS] = {A0, A1, A2, A3, A4};
 
 float Kp = 12;
 float Kd = 2;
@@ -94,10 +94,8 @@ void loop() {
     
     Serial.println(">>>>Error: " + String(error) + "    >>>>PID: " + String(pid));
     
-    int leftSpeedPwm = START_SPEED + pid; 
-    int rightSpeedPwm = START_SPEED - pid;
-
-
+    int leftSpeedPwm = START_SPEED - pid; 
+    int rightSpeedPwm = START_SPEED + pid;
     
     leftSpeedPwm = constrain(leftSpeedPwm, 0, 150);
     rightSpeedPwm = constrain(rightSpeedPwm, 0, 150);
