@@ -12,7 +12,7 @@ const int START_SPEED = 100;
 
 int mask;
 const int NUM_SENSORS = 5; 
-const int sensor_pins[NUM_SENSORS] = {A0, A1, A2, A3, A4};
+const int sensor_pins[NUM_SENSORS] = {A4, A3, A2, A1, A0};
 
 int getSensor();
 void control_motor(int left, int right);
@@ -46,9 +46,8 @@ void loop() {
 int getSensor() {
     mask ^= mask;
     for(int i = 0; i < NUM_SENSORS; i++) {
-        mask |= digitalRead(sensor_pins[i]) << i;
+        mask = mask << 1 | digitalRead(sensor_pins[i]);
     }
-
     switch (mask) { 
         case 0b11110 : error = -4; break;       // Left deviation
         case 0b11100 : error = -3; break;

@@ -12,7 +12,7 @@ const int START_SPEED = 75;
 
 int mask;
 const int NUM_SENSORS = 5; 
-const int sensor_pins[NUM_SENSORS] = {A0, A1, A2, A3, A4};
+const int sensor_pins[NUM_SENSORS] = {A4, A3, A2, A1, A0};
 
 float Kp = 12;
 float Kd = 2;
@@ -50,16 +50,14 @@ void setup() {
 int getSensor() {
     mask ^= mask;
     for(int i = 0; i < NUM_SENSORS; i++) {
-        mask |= digitalRead(sensor_pins[i]) << i;
+        mask = mask << 1 | digitalRead(sensor_pins[i]);
     }
     switch (mask) { 
         case 0b11110 : error = -4; break;       // Left deviation
         case 0b11100 : error = -3; break;
         case 0b11101 : error = -2; break;
         case 0b11001 : error = -1; break;
-
         case 0b11011 : error = 0; break;        // Center 
-
         case 0b10011 : error = 1; break;        // Right deviation
         case 0b10111 : error = 2; break;
         case 0b00111 : error = 3; break;
