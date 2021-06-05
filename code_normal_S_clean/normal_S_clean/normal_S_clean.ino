@@ -5,10 +5,10 @@ const int InB = 12;
 const int InC = 9;
 const int InD = 8;
 
-int error, is_left_direction;
+int error;
 
-const int MAX_SPEED = 255;
-const int START_SPEED = 150;
+const int MAX_SPEED = 150;
+const int START_SPEED = 100;
 
 int mask;
 const int NUM_SENSORS = 5; 
@@ -48,41 +48,26 @@ int getSensor() {
     for(int i = 0; i < NUM_SENSORS; i++) {
         mask |= digitalRead(sensor_pins[i]) << i;
     }
-    error = 0;
-    switch (mask) { 
-        // Giữa line
-        case 0b11011: error = 0; break;                             
-        // Lệch hoàn toàn 
-        case 0b11111: error = 5; break;
 
-        // Gõ vuông sang phải    
-        case 0b10000: break;         
-        case 0b11000: is_left_direction = 1; error = 7; break;  
-        
-        // Lệch trái cấp 1
-        case 0b11001: is_left_direction = 1; error = 1; break;
-        // Lệch trái cấp 2
-        case 0b11101: is_left_direction = 1; error = 2; break;
-        // Lệch trái cấp 3
-        case 0b11100: is_left_direction = 1; error = 3; break;
-        // Lệch trái cấp 4
-        case 0b11110: is_left_direction = 1; error = 4; break;
-        
-        // Lệch phải cấp 1
-        case 0b10011: is_left_direction = 0; error = -1; break;
-        // Lệch phải cấp 2
-        case 0b10111: is_left_direction = 0; error = -2; break;
-        // Lệch phải cấp 3
-        case 0b00111: is_left_direction = 0; error = -3; break;
-        // Lệch phải cấp 4
-        case 0b01111: is_left_direction = 0; error = -4; break;
-        
-        //Gõ vuông sang trái 
-        case 0b00001: 
-        case 0b00011: is_left_direction = 0; error = 6; break;
+    switch (mask) { 
+        case 0b11110 : error = -4; break;       // Left deviation
+        case 0b11100 : error = -3; break;
+        case 0b11101 : error = -2; break;
+        case 0b11001 : error = -1; break;
+        case 0b11011 : error = 0; break;        // Center 
+        case 0b10011 : error = 1; break;        // Right deviation
+        case 0b10111 : error = 2; break;
+        case 0b00111 : error = 3; break;
+        case 0b01111 : error = 4; break;
+
+        case 0b11111 :                          // Left or right deviation
+            if(error < 0) error = -5;
+            else error = 5;
+            break;
+        default: break; 
     }
-    //Serial.println(">>>>Error: " + String(error) );
-    //delay(2000);
+    Serial.println(">>>>Error: " + String(error));
+//    delay(2000);
     return error;
 }
 
@@ -93,23 +78,17 @@ void control_motor(int left, int right) {
 
 void control_robot(int error) {
     switch (error) {
-        case -4: control_motor(25, 150);  break;
-        case -3: control_motor(25, 100);  break;
-        case -2: control_motor(50, 100);  break;
-        case -1: control_motor(100, 150); break;
-        case  0: control_motor(150, 150); break;  
-        case  1: control_motor(150, 100); break;
-        case  2: control_motor(100, 50);  break;
-        case  3: control_motor(100, 25);  break;
-        case  4: control_motor(150, 25);  break;
-        case  6: control_motor(10, 80);   break;
-        case  7: control_motor(80, 10);   break;
-        case  5:                                  
-            if(is_left_direction == 0)
-                control_motor(10, 100); 
-            else
-                control_motor(100, 10);    
-            break;   
+        case -5: control_motor(100, 10);  break;
+        case -4: control_motor(120, 20);  break;
+        case -3: control_motor(100, 20);  break;
+        case -2: control_motor(100, 60);  break;
+        case -1: control_motor(120, 100); break;
+        case  0: control_motor(140, 140); break;  
+        case  1: control_motor(100, 130); break;
+        case  2: control_motor(60, 100);  break;
+        case  3: control_motor(20, 100);  break;
+        case  4: control_motor(20, 120);  break;
+        case  5: control_motor(10, 100);  break;
         default: break;
     }
 }
