@@ -83,7 +83,7 @@ void control_robot(int error) {
         case -2: control_motor(100, 60);  break;
         case -1: control_motor(120, 100); break;
         case  0: control_motor(140, 140); break;  
-        case  1: control_motor(100, 130); break;
+        case  1: control_motor(100, 120); break;
         case  2: control_motor(60, 100);  break;
         case  3: control_motor(20, 100);  break;
         case  4: control_motor(20, 120);  break;
