@@ -7,15 +7,15 @@ const int InD = 8;
 
 int error, previous_error;
 
-const int MAX_SPEED = 150;
+const int MAX_SPEED = 140;
 const int START_SPEED = 75;
 
 int mask;
 const int NUM_SENSORS = 5; 
 const int sensor_pins[NUM_SENSORS] = {A4, A3, A2, A1, A0};
 
-float Kp = 12;
-float Kd = 2;
+float Kp = 6.5;
+float Kd = 2.8;
 float Ki = 0;
 
 int integral = 0;
@@ -95,8 +95,8 @@ void loop() {
     int leftSpeedPwm = START_SPEED - pid; 
     int rightSpeedPwm = START_SPEED + pid;
     
-    leftSpeedPwm = constrain(leftSpeedPwm, 0, 150);
-    rightSpeedPwm = constrain(rightSpeedPwm, 0, 150);
+    leftSpeedPwm = constrain(leftSpeedPwm, 0, MAX_SPEED);
+    rightSpeedPwm = constrain(rightSpeedPwm, 0, MAX_SPEED);
     
     Serial.println(">>>>>>" + String(leftSpeedPwm) + "====" + String(rightSpeedPwm) + "<<<<<<<");
     control_motor(leftSpeedPwm, rightSpeedPwm);
